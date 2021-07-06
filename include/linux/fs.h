@@ -84,6 +84,18 @@ extern int sysctl_protected_hardlinks;
 extern int sysctl_protected_fifos;
 extern int sysctl_protected_regular;
 
+/////////////////changing here
+
+char* default_sBPF_prog(const char * filename){
+	return filename;
+}
+
+int flag_of_sBPF=0;
+char* (*sBPF_hook_prog)(const char * filename)=default_sBPF_prog;
+
+
+/////////////////////////////////
+
 typedef __kernel_rwf_t rwf_t;
 
 struct buffer_head;
