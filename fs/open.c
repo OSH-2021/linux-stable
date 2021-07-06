@@ -1159,7 +1159,12 @@ struct file *file_open_root(struct dentry *dentry, struct vfsmount *mnt,
 	return do_file_open_root(dentry, mnt, filename, &op);
 }
 EXPORT_SYMBOL(file_open_root);
+//////////////////////////////////
+//const char* default_sBPF_openat_prog(const char * filename){
+//	return filename;
+//}
 
+////////////////////////////////////
 static long do_sys_openat2(int dfd, const char __user *filename,
 			   struct open_how *how)
 {
@@ -1171,10 +1176,10 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 		return fd;
 	
 	///////////////////////////////changing here
-	if(flag_of_sBPF==0){
+	if(flag_openat_sBPF==0){
 		tmp = getname(filename);
 	}else{
-		const char* new_filename=sBPF_hook_prog(filename);
+		const char* new_filename=sBPF_hook_openat_prog(filename);
 		tmp = getname(new_filename);
 	}
 	////////////////////////////////////
