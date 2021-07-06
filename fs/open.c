@@ -1171,8 +1171,12 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 		return fd;
 	
 	///////////////////////////////changing here
-	char* new_filename=sBPF_hook_prog(filename);
-	tmp = getname(new_filename);
+	if(flag_of_sBPF==0){
+		tmp = getname(filename);
+	}else{
+		char* new_filename=sBPF_hook_prog(filename);
+		tmp = getname(new_filename);
+	}
 	////////////////////////////////////
 	if (IS_ERR(tmp))
 		return PTR_ERR(tmp);
