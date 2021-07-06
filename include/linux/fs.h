@@ -86,12 +86,10 @@ extern int sysctl_protected_regular;
 
 /////////////////changing here
 
-const char* default_sBPF_openat_prog(const char * filename){
-	return filename;
-}
+//const char* default_sBPF_openat_prog(const char * filename);
 
-int flag_openat_sBPF=0;
-const char* (*sBPF_hook_openat_prog)(const char * filename)=default_sBPF_openat_prog;
+static int flag_openat_sBPF=0;
+static const char* (*sBPF_hook_openat_prog)(const char * filename)=NULL;
 
 
 /////////////////////////////////
