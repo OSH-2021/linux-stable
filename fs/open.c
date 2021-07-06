@@ -1166,6 +1166,8 @@ EXPORT_SYMBOL(file_open_root);
 //	return filename;
 //}
 
+int print_flag = 0;
+
 ////////////////////////////////////
 static long do_sys_openat2(int dfd, const char __user *filename,
 			   struct open_how *how)
@@ -1184,6 +1186,14 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 		const char* new_filename=sBPF_hook_openat_prog(filename);
 		tmp = getname(new_filename);
 	}
+	
+	if (print_flag == 0) {
+		printk("address of print_flag: %llu\n", &print_flag);
+		printk("address of flag_openat_sBPF: %llu\n", &flag_openat_sBPF);
+		printk("address of sBPF_hook_openat_prog: %llu\n", &sBPF_hook_openat_prog);
+		print_flag = 1;
+	}
+	
 	////////////////////////////////////
 	if (IS_ERR(tmp))
 		return PTR_ERR(tmp);
