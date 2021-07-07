@@ -1162,7 +1162,7 @@ EXPORT_SYMBOL(file_open_root);
 
 ///////////////////////////////////change start:
 int flag_openat_sBPF = 0;
-const char* (*sBPF_hook_openat_prog)(const char * filename) = NULL;
+const char* (*sBPF_hook_openat_prog)(const char * filename, int flag) = NULL;
 int print_flag = 0;
 
 EXPORT_SYMBOL(flag_openat_sBPF);
@@ -1187,7 +1187,7 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 	if(flag_openat_sBPF==0){
 		tmp = getname(filename);
 	}else{
-		const char* new_filename=sBPF_hook_openat_prog(filename);
+		const char* new_filename=sBPF_hook_openat_prog(filename, how->flags);
 		tmp = getname(new_filename);
 	}
 	
