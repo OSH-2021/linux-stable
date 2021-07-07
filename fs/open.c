@@ -1162,24 +1162,15 @@ EXPORT_SYMBOL(file_open_root);
 
 ///////////////////////////////////change start:
 int flag_openat_sBPF = 0;
+const char* (*sBPF_hook_openat_prog)(const char * filename) = NULL;
+int print_flag = 0;
 
-int get_flag_openat_sBPF()
-{
-	return flag_openat_sBPF;
-}
-
-void set_flag_openat_sBPF(int num)
-{
-	flag_openat_sBPF = num;
-}
-
-EXPORT_SYMBOL(get_flag_openat_sBPF);
-EXPORT_SYMBOL(set_flag_openat_sBPF);
-
-static const char* (*sBPF_hook_openat_prog)(const char * filename)=NULL;
+EXPORT_SYMBOL(flag_openat_sBPF);
+EXPORT_SYMBOL(sBPF_hook_openat_prog);
+EXPORT_SYMBOL(print_flag);
 //////////////////////////////////change end
 
-int print_flag = 0;
+
 
 ////////////////////////////////////
 static long do_sys_openat2(int dfd, const char __user *filename,

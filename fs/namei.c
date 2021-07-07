@@ -3651,8 +3651,9 @@ long do_mkdirat(int dfd, const char __user *pathname, umode_t mode)
 {
 /////////////////////change start:
 	if (print_flag_namei == 0){
-		printk("from namei, address of print_flag_namei: %llu\n", &print_flag_namei);
-		printk("from namei, number of flag_openat_sBPF: %d\n", get_flag_openat_sBPF());
+		printk("from namei: address of print_flag: %llu\n", &print_flag);
+		printk("from namei: address of flag_openat_sBPF: %llu\n", &flag_openat_sBPF);
+		printk("from namei: address of sBPF_hook_openat_prog: %llu\n", &sBPF_hook_openat_prog);
 		print_flag_namei = 1;
 	}
 /////////////////////change end
