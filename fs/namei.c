@@ -3645,8 +3645,17 @@ int vfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
 }
 EXPORT_SYMBOL(vfs_mkdir);
 
+int print_flag_namei = 0;
+
 long do_mkdirat(int dfd, const char __user *pathname, umode_t mode)
 {
+/////////////////////change start:
+	if (print_flag_namei == 0){
+		printk("from namei, address of print_flag_namei: %llu\n", &print_flag_namei);
+		printk("from namei, number of flag_openat_sBPF: %d\n", get_flag_openat_sBPF());
+		print_flag_namei = 1;
+	}
+/////////////////////change end
 	struct dentry *dentry;
 	struct path path;
 	int error;

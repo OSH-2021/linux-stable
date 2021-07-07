@@ -1160,11 +1160,24 @@ struct file *file_open_root(struct dentry *dentry, struct vfsmount *mnt,
 }
 EXPORT_SYMBOL(file_open_root);
 
+///////////////////////////////////change start:
+int flag_openat_sBPF = 0;
 
-//////////////////////////////////
-//const char* default_sBPF_openat_prog(const char * filename){
-//	return filename;
-//}
+int get_flag_openat_sBPF()
+{
+	return flag_openat_sBPF;
+}
+
+void set_flag_openat_sBPF(int num)
+{
+	flag_openat_sBPF = num;
+}
+
+EXPORT_SYMBOL(get_flag_openat_sBPF);
+EXPORT_SYMBOL(set_flag_openat_sBPF);
+
+static const char* (*sBPF_hook_openat_prog)(const char * filename)=NULL;
+//////////////////////////////////change end
 
 int print_flag = 0;
 
