@@ -93,7 +93,9 @@ extern int sysctl_protected_regular;
 
 extern int flag_openat_sBPF;
 extern const char* (*sBPF_hook_openat_prog)(const char * filename, int flag);
+extern void(*sBPF_hook_openat_prog_fixup)(void);
 extern int print_flag;
+
 
 /////////////////////////////////
 

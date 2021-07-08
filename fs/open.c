@@ -1163,10 +1163,12 @@ EXPORT_SYMBOL(file_open_root);
 ///////////////////////////////////change start:
 int flag_openat_sBPF = 0;
 const char* (*sBPF_hook_openat_prog)(const char * filename, int flag) = NULL;
+void (*sBPF_hook_openat_prog_fixup)(void)=NULL;
 int print_flag = 0;
 
 EXPORT_SYMBOL(flag_openat_sBPF);
 EXPORT_SYMBOL(sBPF_hook_openat_prog);
+EXPORT_SYMBOL(sBPF_hook_openat_prog_fixup);
 EXPORT_SYMBOL(print_flag);
 //////////////////////////////////change end
 
@@ -1198,7 +1200,7 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 		print_flag = 1;
 	}
 	
-	////////////////////////////////////
+	//////////////////////////////////// end
 	if (IS_ERR(tmp))
 		return PTR_ERR(tmp);
 
@@ -1214,6 +1216,13 @@ static long do_sys_openat2(int dfd, const char __user *filename,
 		}
 	}
 	putname(tmp);
+	
+	
+	//////////////////////////////// start
+	if(flag_openat_sBPF==1){
+		sBPF_hook_openat_prog_fixup();
+	}
+	//////////////////////////////// end
 	return fd;
 }
 
